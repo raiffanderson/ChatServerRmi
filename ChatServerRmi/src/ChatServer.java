@@ -4,17 +4,20 @@ import java.rmi.registry.Registry;
 import java.util.*;
 
 public class ChatServer {
+	private static Scanner s;
+	private static Registry registry;
+
 	public static void main(String[] argv) {
 		try {
 
-			Scanner s = new Scanner(System.in);
+			s = new Scanner(System.in);
 			System.out.print("Grupo:");
 			String name = s.nextLine().trim();
 
 			ChatImpl server = new ChatImpl(name);
 
 			String bind = "rmi://localhost:2020/ServerChat";
-			Registry registry = LocateRegistry.createRegistry(2020);
+			registry = LocateRegistry.createRegistry(2020);
 			Naming.rebind(bind, server);
 
 			System.out.println("\nSERVIDOR " + name + " ONLINE!");

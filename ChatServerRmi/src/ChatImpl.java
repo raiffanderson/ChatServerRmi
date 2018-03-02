@@ -21,14 +21,6 @@ public class ChatImpl extends UnicastRemoteObject implements Chat  {
 		return this.name;
 	}
  
-	public void setClient(Chat c){
-		client=c;
-	}
- 
-	public Chat getClient(){
-		return client;
-	}
- 
 	public void send(String s) throws RemoteException{
 		mensagens.add(s);
 	}
