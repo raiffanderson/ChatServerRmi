@@ -3,32 +3,25 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.*;
  
-public class ChatServer {
+public class ChatServer{
 public static void main (String[] argv) {
     try {
     	
 	    	Scanner s=new Scanner(System.in);
-	    	System.out.println("Nome Do usuario:");
+	    	System.out.print("Grupo:");
 	    	String name=s.nextLine().trim();
  
-	    	Chat server = new Chat(name);	
+	    	ChatImpl server = new ChatImpl(name);	
  
-//	    	Naming.rebind("rmi://localhost/PAD_Chat", server);
 	    	Registry registry = LocateRegistry.createRegistry(2020);
-	    	registry.bind("Chat", server);
-	    	System.out.println("[System] Chat Remote Object is ready:");
- 
-	    	while(true){
-	    		String msg=s.nextLine().trim();
-	    		if (server.getClient()!=null){
-	    			ChatInterface client=server.getClient();
-	    			msg="["+server.getName()+"] "+msg;
-	    			client.send(msg);
-	    		}	
-	    	}
+//	    	registry.bind("rmi://localhost:1098/ServerChat", server);
+	    	Naming.rebind("rmi://localhost:2020/ServerChat", server);
+
+	    	
+	    	System.out.println("SERVIDOR ONLINE!");
  
     	}catch (Exception e) {
-    		System.out.println("[System] Server failed: " + e);
+    		System.out.println("FALHA NO SERVIDOR: " + e);
     	}
 	}
 }
